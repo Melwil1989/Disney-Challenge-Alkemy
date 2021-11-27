@@ -1,6 +1,6 @@
 package ar.com.disneychallenge.entities;
 
-import java.util.Date;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -22,6 +22,13 @@ public class Pelicula {
     private Date fechaCreacion;
 
     private Integer calificacion;
+
+    @ManyToOne
+    @JoinColumn(name = "genero_id", referencedColumnName = "genero_id")
+    private Genero genero;
+
+    @OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Personaje> personajes = new ArrayList<>();
 
     public Integer getPeliculaId() {
         return peliculaId;
@@ -61,5 +68,26 @@ public class Pelicula {
 
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public Genero getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Genero genero) {
+        this.genero = genero;
+        this.genero.agregarPelicula(this);
+    }
+
+    public List<Personaje> getPersonajes() {
+        return personajes;
+    }
+
+    public void setPersonajes(List<Personaje> personajes) {
+        this.personajes = personajes;
+    }
+
+    public void agregarPersonaje(Personaje personaje) {
+        this.personajes.add(personaje);
     }
 }

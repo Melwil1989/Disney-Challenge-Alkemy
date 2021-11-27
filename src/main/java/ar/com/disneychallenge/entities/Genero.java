@@ -1,5 +1,7 @@
 package ar.com.disneychallenge.entities;
 
+import java.util.*;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,9 @@ public class Genero {
     private String imagenGenero;
 
     private String nombre;
+
+    @OneToMany(mappedBy = "genero", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Pelicula> peliculas = new ArrayList<>();
 
     public Integer getGeneroId() {
         return generoId;
@@ -38,5 +43,17 @@ public class Genero {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public List<Pelicula> getPeliculas() {
+        return peliculas;
+    }
+
+    public void setPeliculas(List<Pelicula> peliculas) {
+        this.peliculas = peliculas;
+    }
+
+    public void agregarPelicula(Pelicula pelicula) {
+        this.peliculas.add(pelicula);
     }
 }

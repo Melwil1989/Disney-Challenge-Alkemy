@@ -21,6 +21,10 @@ public class Personaje {
 
     private String historia;
 
+    @ManyToOne
+    @JoinColumn(name = "pelicula_id", referencedColumnName = "pelicula_id")
+    private Pelicula pelicula;
+
     public Integer getPersonajeId() {
         return personajeId;
     }
@@ -67,5 +71,14 @@ public class Personaje {
 
     public void setHistoria(String historia) {
         this.historia = historia;
+    }
+
+    public Pelicula getPelicula() {
+        return pelicula;
+    }
+
+    public void setPelicula(Pelicula pelicula) {
+        this.pelicula = pelicula;
+        this.pelicula.agregarPersonaje(this);
     }
 }
