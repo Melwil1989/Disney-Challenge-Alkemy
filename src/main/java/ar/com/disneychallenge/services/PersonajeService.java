@@ -104,4 +104,11 @@ public class PersonajeService {
 
         repo.save(personaje);
     }
+
+    public List<Personaje> obtenerPersonajesPorPeliId(Integer peliculaId) {
+                
+        Pelicula pelicula = peliculaService.buscarPeliculaPorId(peliculaId);
+
+        return pelicula.getPersonajes();
+    }
 }

@@ -138,4 +138,40 @@ public class PeliculaController {
             return ResponseEntity.badRequest().body(respuesta);
         }
     }
+
+    @GetMapping("/movies/{titulo}")
+    public ResponseEntity<?> traerPeliculaPorTitulo(@PathVariable String titulo) {
+
+        GenericResponse respuesta = new GenericResponse();
+
+        if(service.existePorTitulo(titulo)) {
+
+            return ResponseEntity.ok(service.traerPeliculaPorTitulo(titulo));
+
+        } else {
+
+            respuesta.isOk = false;
+            respuesta.message = "La pelicula no existe";
+
+            return ResponseEntity.badRequest().body(respuesta);
+        }
+    }
+
+    @GetMapping("/movies/genres/{generoId}")
+    public ResponseEntity<?> traerPelisPorGenero(@PathVariable Integer generoId) {
+
+        GenericResponse respuesta = new GenericResponse();
+
+        if(generoService.existePorId(generoId)) {
+
+            return ResponseEntity.ok(service.obtenerPelisPorGeneroId(generoId));
+
+        } else {
+
+            respuesta.isOk = false;
+            respuesta.message = "La categoria ingresada no existe";
+
+            return ResponseEntity.badRequest().body(respuesta);
+        }
+    }
 }

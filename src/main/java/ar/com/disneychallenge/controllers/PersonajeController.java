@@ -139,5 +139,22 @@ public class PersonajeController {
             return ResponseEntity.badRequest().body(respuesta);
         }
     }
-    
+
+    @GetMapping("/characters/movies/{peliculaId}")
+    public ResponseEntity<?> traerPersonajesPorPeli(@PathVariable Integer peliculaId) {
+
+        GenericResponse respuesta = new GenericResponse();
+
+        if(peliculaService.existePorId(peliculaId)) {
+
+            return ResponseEntity.ok(service.obtenerPersonajesPorPeliId(peliculaId));
+
+        } else {
+
+            respuesta.isOk = false;
+            respuesta.message = "La pelicula ingresada no existe";
+
+            return ResponseEntity.badRequest().body(respuesta);
+        }
+    }  
 }

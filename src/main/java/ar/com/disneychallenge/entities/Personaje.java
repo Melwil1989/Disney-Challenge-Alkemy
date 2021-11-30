@@ -2,6 +2,8 @@ package ar.com.disneychallenge.entities;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "personaje")
 public class Personaje {
@@ -23,6 +25,7 @@ public class Personaje {
 
     @ManyToOne
     @JoinColumn(name = "pelicula_id", referencedColumnName = "pelicula_id")
+    @JsonIgnore
     private Pelicula pelicula;
 
     public Integer getPersonajeId() {

@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "pelicula")
 public class Pelicula {
@@ -25,9 +27,11 @@ public class Pelicula {
 
     @ManyToOne
     @JoinColumn(name = "genero_id", referencedColumnName = "genero_id")
+    @JsonIgnore
     private Genero genero;
 
-    @OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Personaje> personajes = new ArrayList<>();
 
     public Integer getPeliculaId() {

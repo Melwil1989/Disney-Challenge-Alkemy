@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import ar.com.disneychallenge.entities.Genero;
 import ar.com.disneychallenge.entities.Pelicula;
-import ar.com.disneychallenge.models.request.InfoPeliActualizada;
 import ar.com.disneychallenge.models.response.MovieResponse;
 import ar.com.disneychallenge.repos.PeliculaRepository;
 
@@ -104,5 +103,17 @@ public class PeliculaService {
     public void actualizarPelicula(Pelicula pelicula) {
 
         repo.save(pelicula);
+    }
+
+    public Pelicula traerPeliculaPorTitulo(String titulo) {
+
+        return repo.findByTitulo(titulo);
+    }
+
+    public List<Pelicula> obtenerPelisPorGeneroId(Integer generoId) {
+                
+        Genero genero = generoService.buscarGeneroPorId(generoId);
+
+        return genero.getPeliculas();
     }
 }
