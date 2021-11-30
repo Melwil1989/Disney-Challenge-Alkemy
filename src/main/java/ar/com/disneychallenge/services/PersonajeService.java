@@ -69,4 +69,39 @@ public class PersonajeService {
 
         return personajes;
     }
+
+    public Personaje buscarPersonajePorId(Integer id) {
+
+        Optional<Personaje> resultado = repo.findById(id);
+
+        if(resultado.isPresent())
+            return resultado.get();
+
+        return null;
+    }
+
+    public boolean existePorId(int id) {
+
+        Personaje personaje = repo.findById(id);
+        return personaje != null;
+    }
+
+    public boolean eliminarPersonajePorId(Integer id) {
+
+        boolean res = false;
+
+        if(existePorId(id)) { 
+
+            repo.deleteById(id);
+
+            res = (!existePorId(id));
+        }
+
+        return res;  
+    }
+
+    public void actualizarPersonaje(Personaje personaje) {
+
+        repo.save(personaje);
+    }
 }

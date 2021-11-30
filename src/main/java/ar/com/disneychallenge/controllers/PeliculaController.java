@@ -32,7 +32,7 @@ public class PeliculaController {
     }
 
     @GetMapping("/movies/{id}")
-    public ResponseEntity<?> buscarPreguntaPorId(@PathVariable Integer id) {
+    public ResponseEntity<?> buscarPeliculaPorId(@PathVariable Integer id) {
 
         GenericResponse respuesta = new GenericResponse();
 
