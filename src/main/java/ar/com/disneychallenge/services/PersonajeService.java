@@ -111,4 +111,31 @@ public class PersonajeService {
 
         return pelicula.getPersonajes();
     }
+
+    public Personaje traerPersonajePorNombre(String nombre) {
+
+        return repo.findByNombre(nombre);
+    }
+
+    public List<Personaje> traerPersonajesPorEdad(Integer edad) {
+
+        return repo.findByEdad(edad);
+    }
+
+    public boolean existePorEdad(Integer edad) {
+
+        List<Personaje> personajes = repo.findByEdad(edad);
+        return personajes != null;
+    }
+
+    public boolean existePorPeso(Integer peso) {
+
+        List<Personaje> personajes = repo.findByPeso(peso);
+        return personajes != null;
+    }
+
+    public List<Personaje> traerPersonajesPorPeso(Integer peso) {
+
+        return repo.findByPeso(peso);
+    }
 }

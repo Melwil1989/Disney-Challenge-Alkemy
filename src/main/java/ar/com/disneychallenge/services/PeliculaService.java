@@ -1,14 +1,17 @@
 package ar.com.disneychallenge.services;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.disneychallenge.entities.Genero;
 import ar.com.disneychallenge.entities.Pelicula;
+import ar.com.disneychallenge.entities.Personaje;
 import ar.com.disneychallenge.models.response.MovieResponse;
 import ar.com.disneychallenge.repos.PeliculaRepository;
+import ar.com.disneychallenge.repos.PersonajeRepository;
 
 @Service
 public class PeliculaService {
@@ -18,6 +21,12 @@ public class PeliculaService {
 
     @Autowired
     GeneroService generoService;
+
+    @Autowired
+    PersonajeService personajeService;
+
+    @Autowired
+    PersonajeRepository personajeRepo;
 
     public Pelicula buscarPeliculaPorId(Integer peliculaId) {
 
@@ -92,6 +101,10 @@ public class PeliculaService {
 
         if(existePorId(id)) { 
 
+            List<Personaje> personajesPeli = personajeService.obtenerPersonajesPorPeliId(id);
+
+            personajeRepo.deleteAll(personajesPeli);
+
             repo.deleteById(id);
 
             res = (!existePorId(id));
@@ -115,5 +128,15 @@ public class PeliculaService {
         Genero genero = generoService.buscarGeneroPorId(generoId);
 
         return genero.getPeliculas();
+    }
+
+    public List<Pelicula> traerPelisPorOrdenDesc() {
+
+        return this.traerPeliculas().stream().sorted(Comparator.comparing(Pelicula::getFechaCreacion).reversed()).collect(Collectors.toList());
+    }
+    
+    public List<Pelicula> traerPelisPorOrdenAsc() {
+
+        return this.traerPeliculas().stream().sorted(Comparator.comparing(Pelicula::getFechaCreacion)).collect(Collectors.toList());
     }
 }

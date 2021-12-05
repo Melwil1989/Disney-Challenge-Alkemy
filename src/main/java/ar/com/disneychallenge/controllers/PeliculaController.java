@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import ar.com.disneychallenge.entities.Genero;
@@ -61,6 +62,7 @@ public class PeliculaController {
     } 
 
     @PostMapping("/movies")
+    @PreAuthorize("hasAuthority('CLAIM_userType_STAFF')")
     public ResponseEntity<?> crearPelicula(@RequestBody InfoPeliNueva peliculaNueva) {
 
         GenericResponse respuesta = new GenericResponse();
@@ -86,6 +88,7 @@ public class PeliculaController {
     } 
     
     @DeleteMapping("/movies/{id}")
+    @PreAuthorize("hasAuthority('CLAIM_userType_STAFF')")
     public ResponseEntity<?> eliminarPeliculaPorId(@PathVariable Integer id) {
 
         GenericResponse respuesta = new GenericResponse();
@@ -107,6 +110,7 @@ public class PeliculaController {
     }
 
     @PutMapping("/movies/{id}")
+    @PreAuthorize("hasAuthority('CLAIM_userType_STAFF')")
     public ResponseEntity<?> editarPelicula(@PathVariable Integer id, @RequestBody InfoPeliActualizada peliActualizada) {
 
         GenericResponse respuesta = new GenericResponse();
@@ -139,7 +143,7 @@ public class PeliculaController {
         }
     }
 
-    @GetMapping("/movies/{titulo}")
+    @GetMapping("/api/movies/{titulo}")
     public ResponseEntity<?> traerPeliculaPorTitulo(@PathVariable String titulo) {
 
         GenericResponse respuesta = new GenericResponse();
@@ -173,5 +177,17 @@ public class PeliculaController {
 
             return ResponseEntity.badRequest().body(respuesta);
         }
+    }
+
+    @GetMapping("/movies/order/desc")
+    public ResponseEntity<List<Pelicula>> obtenerPelisPorOrdenDesc() {
+
+        return ResponseEntity.ok(service.traerPelisPorOrdenDesc());
+    }
+
+    @GetMapping("/movies/order/asc")
+    public ResponseEntity<List<Pelicula>> obtenerPelisPorOrdenAsc() {
+
+        return ResponseEntity.ok(service.traerPelisPorOrdenAsc());
     }
 }
