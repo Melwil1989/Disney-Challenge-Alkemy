@@ -103,7 +103,10 @@ public class PeliculaService {
 
             List<Personaje> personajesPeli = personajeService.obtenerPersonajesPorPeliId(id);
 
-            personajeRepo.deleteAll(personajesPeli);
+            for(Personaje personaje : personajesPeli) {
+
+                personajeRepo.deleteById(personaje.getPersonajeId());
+            }
 
             repo.deleteById(id);
 
