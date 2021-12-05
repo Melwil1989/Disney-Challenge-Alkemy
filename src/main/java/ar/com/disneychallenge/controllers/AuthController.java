@@ -32,7 +32,7 @@ public class AuthController {
     private JWTUserDetailsService userDetailsService;
 
     // Auth: authentication ->
-    @PostMapping("/auth/register")
+    @PostMapping("/api/auth/register")
     public ResponseEntity<RegistrationResponse> postRegisterUser(@RequestBody RegistrationRequest req,
             BindingResult results) {
 
@@ -50,7 +50,7 @@ public class AuthController {
         return ResponseEntity.ok(r);
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/api/auth/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody LoginRequest authenticationRequest,
             BindingResult results) throws Exception {
 
